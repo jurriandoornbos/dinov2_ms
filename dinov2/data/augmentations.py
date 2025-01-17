@@ -202,12 +202,17 @@ class DataAugmentationDINO_4CH:
         local_crops_number,
         global_crops_size=224,
         local_crops_size=96,
+        #calculated for my min-max scaled 255 UINT8 Tiffs in the dataset
+        mean = (39.7075, 15.8885, 18.5576,100.3117),
+        std = (30.8822,16.7861,15.7978,44.8835)
     ):
         self.global_crops_scale = global_crops_scale
         self.local_crops_scale = local_crops_scale
         self.local_crops_number = local_crops_number
         self.global_crops_size = global_crops_size
         self.local_crops_size = local_crops_size
+        self.mean = mean
+        self.std = std
 
     def geometric_augmentation_global(self, image):
         # Random resized crop
@@ -224,7 +229,7 @@ class DataAugmentationDINO_4CH:
         return image
 
     def global_transfo1(self, image):
-        return image
+        return self.normalize_4ch(image)
 
     def global_transfo2(self, image):
         return image
@@ -234,6 +239,7 @@ class DataAugmentationDINO_4CH:
 
     def normalize_4ch(self, image):
         tensor = to_tensor_4ch(image)  # (4, H, W)
+        tensor = normalize_4ch(tensor, self.mean, self.std)
         return tensor
 
     def __call__(self, image):
