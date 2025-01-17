@@ -7,7 +7,7 @@ ibot:
 train:
   batch_size_per_gpu: 256 # for vit s adapt to MAX GPU can handle
   dataset_path: CustomImageDataset:split=TRAIN:root=/fileroot
-  centering: sinkhorn_knopp # adapt
+  centering: sinkhorn_knopp # adapt "centering" # or "sinkhorn_knopp"
 student:
   arch: vit_small
   patch_size: 14
@@ -23,8 +23,7 @@ optim:
   epochs: 100 # prolly high enough right
   weight_decay_end: 0.2
   base_lr: 2.0e-04  # learning rate for a batch size of 1024
-  warmup_epochs: 80
   layerwise_decay: 1.0
 crops:
   global_crops_size: 224  #original 224 -> 518 necessary for loading checkpoints, however, interpolation can be used to adapt the size
-  local_crops_size: 98 # div/14 round number
+  local_crops_size: 98 # div/14 == a round number

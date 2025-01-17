@@ -4,7 +4,7 @@ from torchvision.io import read_image
 from torch.utils.data import Dataset
 from torchvision import transforms
 #from sklearn.model_selection import train_test_split
-import tifffile as tif
+import tifffile as tiff
 import random
 #import numpy as np
 #from PIL import Image
