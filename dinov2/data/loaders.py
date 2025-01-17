@@ -12,7 +12,7 @@ from torch.utils.data import Sampler
 
 from .datasets import ImageNet, ImageNet22k
 from .samplers import EpochSampler, InfiniteSampler, ShardedInfiniteSampler
-
+from .datasets.CustomImageDataset import CustomImageDataset
 
 logger = logging.getLogger("dinov2")
 
@@ -58,6 +58,8 @@ def _parse_dataset_str(dataset_str: str):
             kwargs["split"] = ImageNet.Split[kwargs["split"]]
     elif name == "ImageNet22k":
         class_ = ImageNet22k
+    elif name == "CustomImageDataset":
+        class_ = CustomImageDataset
     else:
         raise ValueError(f'Unsupported dataset "{name}"')
 
