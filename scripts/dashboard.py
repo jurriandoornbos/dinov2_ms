@@ -43,16 +43,18 @@ def update_plot():
         time.sleep(10)
 
 def generate_plot():
-    """Generate plot as an HTML page"""
-    plt.figure(figsize=(10, 8))
-    for key in loss_keys:
-        plt.plot(data_store["iterations"], data_store["loss_values"][key], label=key)
+    """Generate individual plots for each loss key"""
+    fig, axes = plt.subplots(len(loss_keys), 1, figsize=(10, 12), sharex=True)
+    for ax, key in zip(axes, loss_keys):
+        ax.plot(data_store["iterations"], data_store["loss_values"][key], label=key)
+        ax.set_ylabel(key)
+        ax.legend()
+        ax.grid(True, linestyle='--', alpha=0.7)
+    
     plt.xlabel("Iteration")
-    plt.ylabel("Loss Value")
-    plt.title("Loss Trends Over Iterations")
-    plt.legend()
-    plt.grid(True, linestyle='--', alpha=0.7)
-    plt.savefig("static/loss_plot.png")
+    plt.suptitle("Loss Trends Over Iterations (Individual Scales)")
+    plt.tight_layout(rect=[0, 0, 1, 0.96])
+    plt.savefig(os.path.join(static_dir, "loss_plot.png"))
     plt.close()
 
 @app.route("/")
