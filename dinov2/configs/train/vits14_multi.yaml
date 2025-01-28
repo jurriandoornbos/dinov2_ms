@@ -8,6 +8,7 @@ train:
   batch_size_per_gpu: 16 # for vit s adapt to MAX GPU can handle
   dataset_path: CustomImageDataset:split=TRAIN:root=/mnt/d/Jurrian/chipped_336:extra=None
   centering: sinkhorn_knopp # adapt "centering" # or "sinkhorn_knopp"
+  output_dir: ./vit_ms14a
 student:
   arch: vit_small
   patch_size: 14
