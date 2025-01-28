@@ -5,7 +5,7 @@ ibot:
   separate_head: true
   head_n_prototypes: 131072
 train:
-  batch_size_per_gpu: 1 # for vit s adapt to MAX GPU can handle
+  batch_size_per_gpu: 64 # for vit s adapt to MAX GPU can handle
   dataset_path: CustomImageDataset:split=TRAIN:root=/mnt/d/Jurrian/chipped_336:extra=None
   centering: sinkhorn_knopp # adapt "centering" # or "sinkhorn_knopp"
 student:
