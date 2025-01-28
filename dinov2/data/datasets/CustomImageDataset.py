@@ -51,7 +51,7 @@ class CustomImageDataset(Dataset):
             test_size=0.2,
             random_state=42):
         self.img_dir = root
-        self.img_labels = os.listdir(self.root)
+        self.img_labels = os.listdir(root)
         self.transform = transform
         self.target_transform = target_transform
         self.split = split
