@@ -185,14 +185,14 @@ def to_tensor_4ch(image):
     # shape (H, W, C) -> (C, H, W)
     return torch.from_numpy(image.transpose(2, 0, 1))
 
-def normalize_4ch(tensor, mean, std):
+def normalize255_4ch(tensor, mean, std):
     """
     Normalize each of the 4 channels with the given mean & std (lists of length 4)
     """
     # tensor: shape (4, H, W)
     #for c in range(tensor.shape[0]):
     #    tensor[c] = (tensor[c] - mean[c]) / std[c]
-    return tensor
+    return tensor.to(torch.float32) / 255.0
 
 class DataAugmentationDINO_4CH:
     def __init__(
@@ -239,7 +239,7 @@ class DataAugmentationDINO_4CH:
 
     def normalize_4ch(self, image):
         tensor = to_tensor_4ch(image)  # (4, H, W)
-        tensor = normalize_4ch(tensor, self.mean, self.std)
+        tensor = normalize255_4ch(tensor, self.mean, self.std)
         return tensor
 
     def __call__(self, image):

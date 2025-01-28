@@ -6,6 +6,10 @@ import os
 import argparse
 from flask import Flask, render_template_string
 
+# Ensure Matplotlib does not use any GUI backend
+import matplotlib
+matplotlib.use('Agg')
+
 # Parse input arguments
 parser = argparse.ArgumentParser(description="Monitor training metrics and visualize losses.")
 parser.add_argument("--input_dir", type=str, required=True, help="Path to the directory containing training_metrics.json")
