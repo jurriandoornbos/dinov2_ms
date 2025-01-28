@@ -21,7 +21,7 @@ teacher:
   momentum_teacher: 0.994
   in_chans: 4
 optim:
-  epochs: 100 # prolly high enough right
+  epochs: 200 # prolly high enough right
   weight_decay_end: 0.2
   base_lr: 3e-06  # learning rate for a batch size of 1024:2e-4; 64: 1.25e-5; 128: 2.5e-5; 256: 5e-5
   layerwise_decay: 1.0
