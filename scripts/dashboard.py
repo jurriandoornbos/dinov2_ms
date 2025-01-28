@@ -50,9 +50,13 @@ def update_plot():
 
 def generate_plot():
     """Generate individual plots for each loss key"""
+    if not data_store["iterations"]:
+        return  # Skip if no data
+    
     fig, axes = plt.subplots(len(loss_keys), 1, figsize=(10, 12), sharex=True)
     for ax, key in zip(axes, loss_keys):
-        ax.plot(data_store["iterations"], data_store["loss_values"][key], label=key)
+        if data_store["loss_values"][key]:
+            ax.plot(data_store["iterations"], data_store["loss_values"][key], label=key)
         ax.set_ylabel(key)
         ax.legend()
         ax.grid(True, linestyle='--', alpha=0.7)
@@ -65,6 +69,8 @@ def generate_plot():
 
 @app.route("/")
 def index():
+    if not os.path.exists(plot_path):
+        return "<h1>No plot available yet. Waiting for data...</h1>"
     return render_template_string("""
     <html>
         <head><title>Loss Trends</title></head>
@@ -78,6 +84,8 @@ def index():
 
 @app.route("/plot")
 def serve_plot():
+    if not os.path.exists(plot_path):
+        return "Plot not found", 404
     return send_from_directory(static_dir, "loss_plot.png")
 
 if __name__ == "__main__":
