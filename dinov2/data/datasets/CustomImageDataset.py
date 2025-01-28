@@ -66,7 +66,7 @@ class CustomImageDataset(Dataset):
 
     def __getitem__(self, idx):
         try:
-            img_path = os.path.join(self.root_dir, self.img_labels[idx])
+            img_path = os.path.join(self.img_dir, self.img_labels[idx])
             with tiff.TiffFile(img_path) as tif:
                 image_array = tif.asarray()
         except Exception as e:
