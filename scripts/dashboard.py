@@ -4,7 +4,7 @@ import time
 import threading
 import os
 import argparse
-from flask import Flask, render_template_string
+from flask import Flask, render_template_string, send_from_directory
 
 # Ensure Matplotlib does not use any GUI backend
 import matplotlib
@@ -21,11 +21,12 @@ file_path = os.path.join(args.input_dir, "training_metrics.json")
 # Ensure the static directory exists
 static_dir = "static"
 os.makedirs(static_dir, exist_ok=True)
+plot_path = os.path.join(static_dir, "loss_plot.png")
 
 app = Flask(__name__)
 
 # Extract loss-related keys
-loss_keys = ["total_loss", "dino_local_crops_loss", "dino_global_crops_loss", "koleo_loss", "ibot_loss"]
+loss_keys = ["total_loss", "dino_local_crops_loss", "dino_global_crops_loss", "koleo_loss", "ibot_loss", "lr"]
 
 data_store = {"iterations": [], "loss_values": {key: [] for key in loss_keys}}
 
@@ -44,6 +45,7 @@ def update_plot():
     """Continuously update the plot every 10 seconds"""
     while True:
         load_data()
+        generate_plot()
         time.sleep(10)
 
 def generate_plot():
@@ -58,22 +60,25 @@ def generate_plot():
     plt.xlabel("Iteration")
     plt.suptitle("Loss Trends Over Iterations (Individual Scales)")
     plt.tight_layout(rect=[0, 0, 1, 0.96])
-    plt.savefig(os.path.join(static_dir, "loss_plot.png"))
+    plt.savefig(plot_path)
     plt.close()
 
 @app.route("/")
 def index():
-    generate_plot()
     return render_template_string("""
     <html>
         <head><title>Loss Trends</title></head>
         <body>
             <h1>Loss Trends Over Iterations</h1>
-            <img src="static/loss_plot.png" alt="Loss Plot" width="800">
+            <img src="/plot" alt="Loss Plot" width="800">
             <meta http-equiv="refresh" content="10">
         </body>
     </html>
     """)
+
+@app.route("/plot")
+def serve_plot():
+    return send_from_directory(static_dir, "loss_plot.png")
 
 if __name__ == "__main__":
     threading.Thread(target=update_plot, daemon=True).start()
