@@ -9,3 +9,5 @@ dist/
 *.swp
 
 .vscode/
+notebooks/Untitled.ipynb
+training_metrics.json

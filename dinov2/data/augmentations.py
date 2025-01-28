@@ -190,8 +190,8 @@ def normalize_4ch(tensor, mean, std):
     Normalize each of the 4 channels with the given mean & std (lists of length 4)
     """
     # tensor: shape (4, H, W)
-    for c in range(tensor.shape[0]):
-        tensor[c] = (tensor[c] - mean[c]) / std[c]
+    #for c in range(tensor.shape[0]):
+    #    tensor[c] = (tensor[c] - mean[c]) / std[c]
     return tensor
 
 class DataAugmentationDINO_4CH:
