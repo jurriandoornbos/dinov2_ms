@@ -69,7 +69,7 @@ def index():
         <head><title>Loss Trends</title></head>
         <body>
             <h1>Loss Trends Over Iterations</h1>
-            <img src="/static/loss_plot.png" alt="Loss Plot" width="800">
+            <img src="static/loss_plot.png" alt="Loss Plot" width="800">
             <meta http-equiv="refresh" content="10">
         </body>
     </html>
