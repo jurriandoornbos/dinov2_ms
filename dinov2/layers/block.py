@@ -26,7 +26,7 @@ logger = logging.getLogger("dinov2")
 
 XFORMERS_ENABLED = os.environ.get("XFORMERS_DISABLED") is None
 try:
-    if XFORMERS_ENABLED:
+    if XFORMERS_ENABLED: #from https://github.com/facebookresearch/dinov2/pull/195/files/942cc2dee424075a8685f87c9ac831d3762d867b
         from xformers.ops import fmha, scaled_index_add as _scaled_index_add, index_select_cat as _index_select_cat
             
         def scaled_index_add(input, index, source, scaling, alpha):
