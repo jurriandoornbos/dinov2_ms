@@ -232,10 +232,10 @@ class DataAugmentationDINO_4CH:
         return self.normalize_4ch(image)
 
     def global_transfo2(self, image):
-        return image
+        return self.normalize_4ch(image)
 
     def local_transfo(self, image):
-        return image
+        return self.normalize_4ch(image)
 
     def normalize_4ch(self, image):
         tensor = to_tensor_4ch(image)  # (4, H, W)
