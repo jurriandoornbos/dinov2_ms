@@ -3,12 +3,18 @@ import json
 import time
 import threading
 import os
+import argparse
 from flask import Flask, render_template_string
 
-app = Flask(__name__)
+# Parse input arguments
+parser = argparse.ArgumentParser(description="Monitor training metrics and visualize losses.")
+parser.add_argument("--input_dir", type=str, required=True, help="Path to the directory containing training_metrics.json")
+args = parser.parse_args()
 
 # File path
-file_path = "training_metrics.json"
+file_path = os.path.join(args.input_dir, "training_metrics.json")
+
+app = Flask(__name__)
 
 # Extract loss-related keys
 loss_keys = ["total_loss", "dino_local_crops_loss", "dino_global_crops_loss", "koleo_loss", "ibot_loss"]
