@@ -14,6 +14,10 @@ args = parser.parse_args()
 # File path
 file_path = os.path.join(args.input_dir, "training_metrics.json")
 
+# Ensure the static directory exists
+static_dir = "static"
+os.makedirs(static_dir, exist_ok=True)
+
 app = Flask(__name__)
 
 # Extract loss-related keys
