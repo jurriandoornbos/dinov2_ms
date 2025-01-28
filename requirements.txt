@@ -8,5 +8,6 @@ iopath
 xformers==0.0.18
 submitit
 tifffile
+opencv-python-headless
 --extra-index-url https://pypi.nvidia.com
 cuml-cu11
